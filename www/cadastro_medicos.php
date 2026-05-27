@@ -1,5 +1,32 @@
 <?php
 include("conexao.php");
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $nome = $_POST['nome'];
+    $crm = $_POST['crm'];
+    $especialidade = $_POST['especialidade'];
+    $telefone = $_POST['telefone'];
+    $email = $_POST['email'];
+    $status = $_POST['status'];
+
+    $sqlInsert = "INSERT INTO medicos
+    (nome, crm, especialidade_id, telefone, email, status)
+    VALUES
+    (
+        '$nome',
+        '$crm',
+        '$especialidade',
+        '$telefone',
+        '$email',
+        '$status'
+    )";
+
+    mysqli_query($conexao_bd, $sqlInsert);
+
+    header("Location: cadastro_medicos.php");
+    exit;
+}
 /* ============================================================
    cadastro_medicos.php - Cadastro de Médicos
    ------------------------------------------------------------
@@ -97,7 +124,7 @@ while($linha = mysqli_fetch_assoc($resultado)){
 ============================================================ */
 $especialidades = array();
 
-$sqlEspecialidades = "SELECT nome FROM especialidades";
+$sqlEspecialidades = "SELECT * FROM especialidades";
 
 $resultadoEspecialidades = mysqli_query(
     $conexao_bd,
@@ -650,7 +677,7 @@ while($esp = mysqli_fetch_assoc($resultadoEspecialidades)){
                 </div>
 
                 <!-- TODO: action="cadastro_medicos.php" method="POST" ao integrar com banco -->
-                <form id="formMedico">
+                <form id="formMedico" method="POST" action="cadastro_medicos.php">
                     <input type="hidden" name="acao" id="formAcao" value="novo">
                     <input type="hidden" name="id"   id="formId"   value="">
 
@@ -671,7 +698,7 @@ while($esp = mysqli_fetch_assoc($resultadoEspecialidades)){
                                 <select class="form-select" id="formEspecialidade" name="especialidade" required>
                                     <option value="">Selecione...</option>
                                     <?php foreach ($especialidades as $esp): ?>
-                                        <option value="<?php echo htmlspecialchars($esp) ?>"><?php echo htmlspecialchars($esp) ?></option>
+                                        <option value="<?php echo $esp['id'] ?>"><?php echo htmlspecialchars($esp['nome']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                                 <!-- TODO: popular via cadastro_especialidades.php -->
@@ -697,9 +724,9 @@ while($esp = mysqli_fetch_assoc($resultadoEspecialidades)){
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <!-- TODO: mudar para type="submit" ao integrar com banco -->
-                        <button type="button" class="btn btn-primary" onclick="salvarMedico()">
+       <button type="submit" class="btn btn-primary">
+    <i class="fa-solid fa-floppy-disk me-1"></i> Salvar
+</button>
                             <i class="fa-solid fa-floppy-disk me-1"></i> Salvar
                         </button>
                     </div>
@@ -815,66 +842,7 @@ while($esp = mysqli_fetch_assoc($resultadoEspecialidades)){
         // FUNÇÃO PRINCIPAL: salvar médico
         // TODO: substituir o corpo por fetch/AJAX ao integrar com o banco
         // ==================================================
-        function salvarMedico() {
-            var form = document.getElementById('formMedico');
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
-            }
-
-            var acao          = document.getElementById('formAcao').value;
-            var id            = document.getElementById('formId').value;
-            var nome          = document.getElementById('formNome').value.trim();
-            var crm           = document.getElementById('formCrm').value.trim();
-            var especialidade = document.getElementById('formEspecialidade').value;
-            var telefone      = document.getElementById('formTelefone').value.trim();
-            var email         = document.getElementById('formEmail').value.trim();
-            var status        = document.getElementById('formStatus').value;
-            var iniciais      = gerarIniciais(nome);
-
-            if (acao === 'editar') {
-                var btnEditar = document.querySelector('.btn-editar[data-id="' + id + '"]');
-                if (btnEditar) {
-                    var tr = btnEditar.closest('tr');
-                    tr.cells[1].innerHTML =
-                        '<div class="d-flex align-items-center">' +
-                        '<span class="avatar-medico">' + iniciais + '</span>' + nome + '</div>';
-                    tr.cells[2].textContent = crm;
-                    tr.cells[3].textContent = especialidade;
-                    tr.cells[4].textContent = telefone;
-                    tr.cells[5].textContent = email;
-                    tr.cells[6].innerHTML   = '<span class="badge-status ' + getBadgeClassMedico(status) + '">' + status + '</span>';
-
-                    btnEditar.dataset.nome          = nome;
-                    btnEditar.dataset.crm           = crm;
-                    btnEditar.dataset.especialidade = especialidade;
-                    btnEditar.dataset.telefone      = telefone;
-                    btnEditar.dataset.email         = email;
-                    btnEditar.dataset.status        = status;
-
-                    var btnExcluir = tr.querySelector('.btn-excluir');
-                    if (btnExcluir) btnExcluir.dataset.nome = nome;
-                }
-            } else {
-                var tbody    = document.querySelector('.tabela-medicos tbody');
-                var semDados = tbody.querySelector('td[colspan]');
-                if (semDados) semDados.closest('tr').remove();
-
-                var novoId = 'tmp-' + Date.now();
-                tbody.appendChild(criarLinhaMedico(novoId, nome, crm, especialidade, telefone, email, status, iniciais));
-                atualizarContadorMedico();
-            }
-
-            modalFormMedico.hide();
-            Swal.fire({
-                icon: 'success',
-                title: 'Salvo!',
-                text: acao === 'editar' ? 'Médico atualizado com sucesso.' : 'Médico cadastrado com sucesso.',
-                confirmButtonColor: '#0d6efd',
-                timer: 2000,
-                showConfirmButton: false
-            });
-        }
+        
 
         // Cria um <tr> completo para a tabela de médicos
         function criarLinhaMedico(id, nome, crm, especialidade, telefone, email, status, iniciais) {
