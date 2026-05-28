@@ -96,7 +96,8 @@ while($esp = mysqli_fetch_assoc($resultadoEspecialidades)){
     $especialidades[] = $esp;
 }
 
-?>  = "Dr. João Silva";
+$operadorNome  = "Dr. João Silva";
+$operadorEmail = "joao.silva@clinica.com";
 $operadorEmail = "joao.silva@clinica.com";
 
 /* ============================================================
