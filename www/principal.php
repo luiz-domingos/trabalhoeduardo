@@ -473,22 +473,35 @@ $agendamentosFicticios = [
     <!-- ==================================================
          SIDEBAR LATERAL
     ================================================== -->
-    <aside class="sidebar" id="sidebar">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link ativo" href="principal.php"><i class="fa-solid fa-calendar-days"></i> Calendário</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="cadastro_agendas.php"><i class="fa-solid fa-calendar-plus"></i> Agendamentos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="cadastro_medicos.php"><i class="fa-solid fa-user-doctor"></i> Cadastro de Médicos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa-solid fa-list-check"></i> Cadastro de Especialidades</a>
-            </li>
-        </ul>
-    </aside>
+   <aside class="sidebar" id="sidebar">
+    <ul class="nav flex-column">
+
+        <li class="nav-item">
+            <a class="nav-link ativo" href="principal.php">
+                <i class="fa-solid fa-calendar-days"></i> Calendário
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="cadastro_agendas.php">
+                <i class="fa-solid fa-calendar-plus"></i> Agendamentos
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="cadastro_medicos.php">
+                <i class="fa-solid fa-user-doctor"></i> Cadastro de Médicos
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="cadastro_especialidades.php">
+                <i class="fa-solid fa-list-check"></i> Cadastro de Especialidades
+            </a>
+        </li>
+
+    </ul>
+</aside>
 
     <!-- Overlay para mobile -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
