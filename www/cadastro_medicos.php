@@ -27,6 +27,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header("Location: cadastro_medicos.php");
     exit;
 }
+if (isset($_GET['excluir'])) {
+
+    $id = $_GET['excluir'];
+
+    $sqlExcluir = "UPDATE medicos
+                   SET status='Inativo'
+                   WHERE id=$id";
+
+    mysqli_query($conexao_bd, $sqlExcluir);
+
+    header("Location: cadastro_medicos.php");
+    exit;
+}
 /* ============================================================
    cadastro_medicos.php - Cadastro de Médicos
    ------------------------------------------------------------
@@ -628,12 +641,13 @@ while($esp = mysqli_fetch_assoc($resultadoEspecialidades)){
                                         <i class="fa-solid fa-pen"></i>
                                     </button>
                                     <!-- TODO: confirmar e enviar POST acao=excluir&id=X -->
-                                    <button class="btn btn-sm btn-outline-danger py-0 px-2 btn-excluir"
-                                            title="Excluir médico"
-                                            data-id="<?php echo $med['id'] ?>"
-                                            data-nome="<?php echo htmlspecialchars($med['nome']) ?>">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
+                                    <a
+    href="cadastro_medicos.php?excluir=<?php echo $med['id'] ?>"
+    class="btn btn-sm btn-outline-danger"
+    onclick="return confirm('Deseja excluir este médico?')"
+>
+    <i class="fa-solid fa-trash"></i>
+</a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
