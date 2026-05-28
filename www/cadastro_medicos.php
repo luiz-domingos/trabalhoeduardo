@@ -119,10 +119,11 @@ $resultado = mysqli_query($conexao_bd, $sql);
 
 
 
+$medicos = array();
+
 while($linha = mysqli_fetch_assoc($resultado)){
     $medicos[] = $linha;
 }
-
 /* ============================================================
    APLICAÇÃO DOS FILTROS NOS DADOS FICTÍCIOS
    TODO: Remover este bloco ao integrar com o banco —
@@ -146,6 +147,7 @@ $resultadoEspecialidades = mysqli_query(
 
 while($esp = mysqli_fetch_assoc($resultadoEspecialidades)){
     $especialidades[] = $esp['nome'];
+}
 }
 ?>
 <!DOCTYPE html>
@@ -739,8 +741,11 @@ while($esp = mysqli_fetch_assoc($resultadoEspecialidades)){
 
                     <div class="modal-footer">
        <button type="submit" class="btn btn-primary">
-    <i class="fa-solid fa-floppy-disk me-1"></i> Salvar
-</button>
+    <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">
+        <i class="fa-solid fa-floppy-disk me-1"></i> Salvar
+    </button>
+</div>
                             <i class="fa-solid fa-floppy-disk me-1"></i> Salvar
                         </button>
                     </div>
