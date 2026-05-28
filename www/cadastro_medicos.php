@@ -1,5 +1,8 @@
 <?php
+
 include("conexao.php");
+
+/** @var mysqli $conexao_bd */
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -27,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header("Location: cadastro_medicos.php");
     exit;
 }
+
 if (isset($_GET['excluir'])) {
 
     $id = $_GET['excluir'];
@@ -40,23 +44,59 @@ if (isset($_GET['excluir'])) {
     header("Location: cadastro_medicos.php");
     exit;
 }
-/* ============================================================
-   cadastro_medicos.php - Cadastro de Médicos
-   ------------------------------------------------------------
-   TODO: Adicionar validação de sessão aqui (após implementar login)
-   Ex:
-   session_start();
-   if (!isset($_SESSION['operador'])) {
-       header("Location: login.php");
-       exit;
-   }
-============================================================ */
 
 /* ============================================================
    DADOS DO OPERADOR LOGADO
-   TODO: Substituir pelos dados vindos da $_SESSION
 ============================================================ */
+
 $operadorNome  = "Dr. João Silva";
+$operadorEmail = "joao.silva@clinica.com";
+
+/* ============================================================
+   FILTROS
+============================================================ */
+
+$filtroNome          = trim(isset($_GET['nome']) ? $_GET['nome'] : '');
+$filtroEspecialidade = trim(isset($_GET['especialidade']) ? $_GET['especialidade'] : '');
+$filtroStatus        = trim(isset($_GET['status']) ? $_GET['status'] : '');
+
+/* ============================================================
+   MÉDICOS
+============================================================ */
+
+$sql = "SELECT
+m.*,
+e.nome AS especialidade
+FROM medicos m
+LEFT JOIN especialidades e
+ON e.id = m.especialidade_id";
+
+$resultado = mysqli_query($conexao_bd, $sql);
+
+$medicos = array();
+
+while($linha = mysqli_fetch_assoc($resultado)){
+    $medicos[] = $linha;
+}
+
+/* ============================================================
+   ESPECIALIDADES
+============================================================ */
+
+$especialidades = array();
+
+$sqlEspecialidades = "SELECT * FROM especialidades";
+
+$resultadoEspecialidades = mysqli_query(
+    $conexao_bd,
+    $sqlEspecialidades
+);
+
+while($esp = mysqli_fetch_assoc($resultadoEspecialidades)){
+    $especialidades[] = $esp;
+}
+
+?>  = "Dr. João Silva";
 $operadorEmail = "joao.silva@clinica.com";
 
 /* ============================================================
@@ -146,9 +186,9 @@ $resultadoEspecialidades = mysqli_query(
 );
 
 while($esp = mysqli_fetch_assoc($resultadoEspecialidades)){
-    $especialidades[] = $esp['nome'];
+    $especialidades[] = $esp;
 }
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -954,7 +994,9 @@ while($esp = mysqli_fetch_assoc($resultadoEspecialidades)){
             }
             var el = document.getElementById('contadorRegistros');
             if (el) el.textContent = total + ' registro(s) encontrado(s)';
-        }
-    </script>
+}
+
+
+</script>
 </body>
 </html>
