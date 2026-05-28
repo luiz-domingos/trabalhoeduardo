@@ -519,9 +519,9 @@ while($esp = mysqli_fetch_assoc($resultadoEspecialidades)){
                         <select class="form-select form-select-sm" id="filtroEspecialidade" name="especialidade">
                             <option value="">Todas</option>
                             <?php foreach ($especialidades as $esp): ?>
-                                <option value="<?php echo htmlspecialchars($esp) ?>"
+                                <option value="<?php echo $esp['id'] ?>">
                                     <?php echo ($filtroEspecialidade === $esp) ? 'selected' : '' ?>>
-                                    <?php echo htmlspecialchars($esp) ?>
+                                    <?php echo htmlspecialchars($esp['nome']) ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
