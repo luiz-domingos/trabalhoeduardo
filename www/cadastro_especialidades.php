@@ -26,12 +26,17 @@ $resultado = mysqli_query(
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
+
     <title>Especialidades</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
+
 <body class="container mt-5">
 
     <h2>Cadastro de Especialidades</h2>
@@ -39,6 +44,7 @@ $resultado = mysqli_query(
     <form method="POST">
 
         <div class="mb-3">
+
             <label>Nome</label>
 
             <input
@@ -47,6 +53,7 @@ $resultado = mysqli_query(
                 class="form-control"
                 required
             >
+
         </div>
 
         <button type="submit" class="btn btn-primary">
@@ -76,4 +83,5 @@ $resultado = mysqli_query(
     </table>
 
 </body>
+
 </html>
