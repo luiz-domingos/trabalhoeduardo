@@ -1,22 +1,33 @@
 <?php
+
 session_start();
-require_once("conexao.php");// importar o conexao.php para esta página
+
+require_once("conexao.php");
 
 if(!isset($_SESSION['cod_usuario'])){
     header("Location: login.php");
     exit;
 }
+
 $cod_usuario = $_SESSION['cod_usuario'];
+
 $nomeUsuario = "";
 $emailUsuario = "";
-$sql = "SELECT * FROM usuario WHERE cod_usuario = '$cod_usuario'";
 
-$result = mysqli_query($conexao_bd,$sql); //pega o resultado da query e lança num array
+$sql = "SELECT * FROM usuarios
+        WHERE cod_usuario = '$cod_usuario'";
 
-if($consulta = mysqli_fetch_assoc($result)){ //leitura do array
-    $nomeUsuario  = $consulta['nome'];
+$result = mysqli_query($conexao_bd, $sql);
+
+if($consulta = mysqli_fetch_assoc($result)){
+
+    $nomeUsuario = $consulta['nome'];
+
     $emailUsuario = $consulta['email'];
 }
+
+?>
+?>
 /* ============================================================
    principal.php - Dashboard de Agendamento de Consultas Médicas
    ------------------------------------------------------------

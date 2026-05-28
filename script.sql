@@ -170,3 +170,25 @@ CREATE OR REPLACE VIEW vw_medicos AS
         m.updated_at
     FROM medicos       m
     JOIN especialidades e ON e.id = m.especialidade_id;
+ALTER TABLE medicos
+ADD status ENUM('Ativo','Inativo')
+DEFAULT 'Ativo';
+
+ALTER TABLE especialidades
+ADD status ENUM('Ativo','Inativo')
+DEFAULT 'Ativo';
+
+CREATE OR REPLACE VIEW vw_agendamentos AS
+SELECT
+    a.id,
+    a.paciente,
+    a.data,
+    a.horario,
+    a.status,
+    m.nome AS medico,
+    e.nome AS especialidade
+FROM agendamentos a
+INNER JOIN medicos m
+ON m.id = a.medico_id
+INNER JOIN especialidades e
+ON e.id = a.especialidade_id;
