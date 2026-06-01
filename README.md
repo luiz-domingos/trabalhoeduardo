@@ -52,5 +52,18 @@ O sistema foi desenvolvido como atividade acadêmica da disciplina de Desenvolvi
 
 - Luiz Gustavo da Silva Domingos
 
+## Melhorias Implementadas
 
----
+Durante o desenvolvimento do projeto foram realizadas as seguintes melhorias:
+
+* Implementação do CRUD de Médicos;
+* Implementação do CRUD de Especialidades;
+* Integração com banco de dados MySQL;
+* Relacionamento entre Médicos e Especialidades;
+* Exclusão lógica de médicos através do campo Status;
+* Ajuste da navegação lateral do sistema;
+* Correção dos hiperlinks da aplicação;
+* Melhorias na interface utilizando Bootstrap;
+* Organização e padronização do código-fonte;
+* Integração com GitHub para controle de versão.
+
