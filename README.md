@@ -50,9 +50,7 @@ O sistema foi desenvolvido como atividade acadêmica da disciplina de Desenvolvi
 
 ## Integrantes
 
-- Nome Completo 1
-- Nome Completo 2
-- Nome Completo 3
-- Nome Completo 4
+- Luiz Gustavo da Silva Domingos
+
 
 ---
